@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Ewen Bros | BUT Réseaux et Télécommunications</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 48px;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tab {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tab:hover, .tab.active {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .sae-card {
+            border-left: 5px solid #4ecdc4;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .sae-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            border-radius: 50%;
+            transform: translate(50%, -50%);
+            opacity: 0.1;
+        }
+
+        .sae-title {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .sae-badge {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .grade {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+            animation: glow 2s infinite alternate;
+        }
+
+        .grade.good {
+            background: linear-gradient(45deg, #00b894, #00cec9);
+        }
+
+        .grade.average {
+            background: linear-gradient(45deg, #fdcb6e, #f39c12);
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(255, 107, 107, 0.5); }
+            to { box-shadow: 0 0 20px rgba(255, 107, 107, 0.8); }
+        }
+
+        .reflection-box {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid #e17055;
+        }
+
+        .reflection-title {
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .tech-tag {
+            background: #2d3436;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+
+        .sae-details {
+            margin: 15px 0;
+        }
+
+        .sae-details h4 {
+            color: #2c3e50;
+            margin: 10px 0 5px 0;
+        }
+
+        .sae-details ul {
+            margin-left: 20px;
+        }
+
+        .sae-details li {
+            margin: 5px 0;
+        }
+
+        .link-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .link-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .semester-title {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            margin: 30px 0 20px 0;
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .competences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .competence-card {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .competence-card:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .stats-summary {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .stats-item {
+            display: inline-block;
+            margin: 10px 20px;
+            text-align: center;
+        }
+
+        .stats-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stats-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab {
+                width: 200px;
+                text-align: center;
+            }
+            
+            .competences-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sae-title {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="profile-img">EB</div>
+            <h1>Ewen Bros</h1>
+            <div class="subtitle">Étudiant BUT Réseaux et Télécommunications</div>
+            <div class="subtitle">IUT Campus 3 IFS • 2024-2025</div>
+            <span class="badge">Réseaux</span>
+            <span class="badge">Cybersécurité</span>
+            <span class="badge">Télécommunications</span>
+            <span class="badge">Développement</span>
+        </header>
+
+        <div class="nav-tabs">
+            <button class="tab active" onclick="showSection('accueil')">Accueil</button>
+            <button class="tab" onclick="showSection('s1')">Semestre 1</button>
+            <button class="tab" onclick="showSection('s2')">Semestre 2</button>
+            <button class="tab" onclick="showSection('competences')">Compétences</button>
+        </div>
+
+        <div id="accueil" class="content-section active">
+            <div class="card">
+                <h2>🎓 Bienvenue dans mon Portfolio</h2>
+                <p>Je suis Ewen Bros, étudiant en BUT Réseaux et Télécommunications à l'IUT Campus 3 IFS. Ce portfolio retrace mon parcours académique à travers les différentes SAÉ (Situations d'Apprentissage et d'Évaluation) réalisées durant ma formation.</p>
+                
+                <div class="stats-summary">
+                    <div class="stats-item">
+                        <div class="stats-number">8</div>
+                        <div class="stats-label">SAÉ Réalisées</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-number">4</div>
+                        <div class="stats-label">Compétences Développées</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-number">2</div>
+                        <div class="stats-label">Semestres Complétés</div>
+                    </div>
+                </div>
+
+                <div class="competences-grid">
+                    <div class="competence-card">
+                        <h3>🔐 Cybersécurité & Hygiène Informatique</h3>
+                        <p>Formation MOOC ANSSI, sécurisation SSH, authentification par clés</p>
+                    </div>
+                    <div class="competence-card">
+                        <h3>🌐 Administration Réseaux</h3>
+                        <p>Configuration switches/routeurs, VLAN, routage statique, Windows Server</p>
+                    </div>
+                    <div class="competence-card">
+                        <h3>💻 Développement Web & Applications</h3>
+                        <p>Python, JavaScript, HTML/CSS, API REST, sites responsives</p>
+                    </div>
+                    <div class="competence-card">
+                        <h3>📡 Télécommunications & Signaux</h3>
+                        <p>Analyse spectrale, mesures radioélectriques, cartographie mobile</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="s1" class="content-section">
+
+            <div class="sae-card card">
+                <div class="sae-title">
+                    <span class="sae-badge">SAE 1.1</span>
+                    Se sensibiliser à l'hygiène informatique et à la cybersécurité
+                </div>
+                
+                <div class="sae-details">
+                    <h4>📋 Objectifs :</h4>
+                    <ul>
+                        <li>auto-formation individuelle au MOOC de l’ANSSI : Massive Open Online Course. Différentes ressources autour de l’hygiène numérique : vidéos, présentations, quizz, etc.</li>
+                        <li>Un QCM final en fin de SAE sur le MOOC   </li>
+                        <li>Objectifs : Produire une notice (document collaboratif en ligne) par groupe de 4 pour chaque lot  Présenter un résumé de cette notice sous la forme de quelques diapositives lors la séance d’oral qui sera encadrée par un enseignant , avec mon groupe on a faite le lot B Accès SSH</li>
+                    </ul>
+
+                    <h4>🔧 Travail réalisé en groupe:</h4>
+                    <ul>
+                        <li>Travail de recherche et d’expérimentation : Décrire sur un logiciel serveur et client SSH comment : Renforcer la sécurité de la connexion : Port, algorithmes, blocage si n tentatives, protection des clés, etc. Remplacer le login/password par une clé publique/privée : Explique les mécanismes, insister sur les algorithmes préconisés par l’ANSSI et la taille des clés </li>
+                    </ul>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">SSH</span>
+                    <span class="tech-tag">Cryptographie</span>
+                    <span class="tech-tag">ANSSI</span>
+                    <span class="tech-tag">Sécurité</span>
+                </div>
+
+                <div class="grade good">📊 MOOC: 87% | QCM: 16.5/20 | Oral: 12.5/20</div>
+
+                <div class="reflection-box">
+                    <div class="reflection-title">🤔 Autocritique :</div>
+                    <p>ans la globalité j’ai très bien réussi cette SAE, j’ai très bien intégré les notions du MOOC, le point a amélioré c’est la répartition du travail sur la présentation chacun a fait sa partie de la présentation sans vraiment se soucier de la partie de l’autre et lors de l’orale un de mes camarades a fait une présentation un peu confus.
+.</p>
+                    
+                    <div class="reflection-title">💡 Conclusions :</div>
+                    <p> on aurais dû mieux s’organise et s’y prendre plus en avance, car on n'a pas fait d’entraînement et on n’a pas pu voir les difficultés de chacun. 
+.</p>
+                </div>
+            </div>
+
+            <div class="sae-card card">
+                <div class="sae-title">
+                    <span class="sae-badge">SAE 1.2</span>
+                    S'initier aux réseaux informatiques
+                </div>
+                
+                <div class="sae-details">
+            
+                   
+
+                    <h4>📝 Évaluations (4 parties) :</h4>
+                    <ul>
+                        <li><strong>QCM</strong> : Masques sous-réseau, modèle OSI</li>
+                        <li><strong>TP noté</strong> : Configuration pratique</li>
+                        <li><strong>Examen Cisco NetAcad</strong> : Présentation des réseaux</li>
+                        <li><strong>Maquette réseau</strong> : Configuration 3 switches</li>
+                    </ul>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">Cisco</span>
+                    <span class="tech-tag">Switches</span>
+                    <span class="tech-tag">OSI</span>
+                    <span class="tech-tag">Sous-réseaux</span>
+                </div>
+
+                <div class="grade average">📊 QCM: 10.8/20 | NetAcad: 9/20 | Maquette: 12.8/20</div>
+
+                <div class="reflection-box">
+                    <div class="reflection-title"></div>
+                    <p>Le QCM porte sur les masques de sous réseau et le modèle OSI/Trame pour ce QCM j’ai eu la moyenne avec 10.8/20 c’est pas exceptionnelle j’aurais pue faire mieux, l’examen cisco netacade sur la présentation des réseau qui était assez compliqué a ce moment la de l’année on avais pas beaucoup de connaissance en réseau mais j’ai réussie a m’en sortire avec 62/100 ce qui équivaut a 9/20 et pour la maquette du réseau ça a été compliqué, je me suis occupé de la configuration des 3 switches et j’ai eu beaucoup de mal a régler certain problème comme par exemple le routage les switches ne transmettais pas les information de la box au PC, cependant j’ai réussie a faire en sorte que tout fonctionne a temps car j’ai fait beaucoup d’heur supplémentaire la veille du rendue je suis rester après 20h a l’IUT pour faire en sorte  que tout fonctionne alors que j’avais fini les cours a 16h, cependant mon camarade qui gérais la parte sevrer proxmox a eu beaucoup de problème  mais au finale on a eu la note de 12.80 dont la majeurs partie des points perdue venait de la partie sevrer proxmox.Si je devait refaire cet sae je ferais en sorte de mieux m’organiser car au débute on a pris notre temps et au moment ou on c’est rendue compte que l’on était en retard je ne pouvait pas aider ce camarade en difficulté 
+</p>
+                    
+
+                </div>
+            </div>
+
+            <div class="sae-card card">
+                <div class="sae-title">
+                    <span class="sae-badge">SAE 1.4</span>
+                    Se présenter sur Internet
+                </div>
+                
+                <div class="sae-details">
+                    <h4>📋 Cahier des charges du site internet :</h4>
+                    <ul>
+                        <li>Minimum 3 pages (accueil, sujet, à propos)</li>
+                        <li>Charte graphique cohérente</li>
+                        <li>Validation W3C et conformité WCAG 2.0 AA</li>
+                        <li>Flexbox/CSS Grid, design responsive</li>
+                        <li>Animations CSS</li>
+                        <li>Hébergement GitHub Pages</li>
+                    </ul>
+
+                    <h4>🎨 Thème choisi :</h4>
+                    <p>Pour le thème de mon site internet j’ai choisie de reproduire la page de garde de ChatGPT  parce que c’est un site incroyable</p>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">HTML5</span>
+                    <span class="tech-tag">CSS3</span>
+                    <span class="tech-tag">Flexbox</span>
+                    <span class="tech-tag">GitHub Pages</span>
+                    <span class="tech-tag">Responsive</span>
+                </div>
+
+                <div class="grade average">📊 Note: 12.5/20</div>
+                
+                <a href="https://ewen-96.github.io/SAE14/index.html" class="link-button" target="_blank">🌐 Voir le site</a>
+
+                <div class="reflection-box">
+                    <div class="reflection-title"></div>
+                    <p>
+
+
+ j’ai eu beaucoup de mal sur l’animation de l’image de la page  Fonctionnement  qui d’hailleur ne fonctionne pas sur le rendue finale, Au finale j’ai plutôt bien répondue au attentes du prof car j’ai eu 12.50/20 je pense que j’aurais pue faire un peut mieux avec plus d’animation mais le rendue me vas 
+</p>
+                </div>
+            </div>
+
+            <div class="sae-card card">
+                <div class="sae-title">
+                    <span class="sae-badge">SAE 1.5</span>
+                    Traitement des données
+                </div>
+                
+                <div class="sae-details">
+                    <h4>🎯 Objectifs (Projet Python - PokéAPI) :</h4>
+                    <ul>
+                        <li>Créer un site internet qui crée des fiches Pokémon détaillées a partire de leurs ID </li>
+                        <li>Produire des statistiques à partir des données API</li>
+                    </ul>
+
+                    <h4>📦 Livrables :</h4>
+                    <ul>
+                        <li><strong>pokefiche.py</strong> : Génération fiches Pokémon</li>
+                        <li><strong>stats.py</strong> : Analyses statistiques</li>
+                        <li><strong>md_to_html.py</strong> : Conversion Markdown→HTML</li>
+                        <li>Fiches individuelles + page statistiques</li>
+                    </ul>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">API REST</span>
+                    <span class="tech-tag">JSON</span>
+                    <span class="tech-tag">Markdown</span>
+                    <span class="tech-tag">HTML</span>
+                </div>
+
+                <div class="grade good">📊 Note: 15.24/20</div>
+
+                <div class="reflection-box">
+                    <div class="reflection-title"></div>
+                    <p>Le projet nous a permis de développer notre autonomie en programmation Python, de travailler avec des données JSON issues d’une API, et de générer automatiquement des documents lisibles et bien structurés (Markdown, HTML).
+j’ai eu la note de 15.24/20 ce qui est un résultat qui me satisfait globalement avec mon camarade on a bien répartie la charge de travail , on aurai pu mettre du css sur la page internet pour la rendre plus jolie mais c’était optionnelle et n’influence pas la note 
+</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="s2" class="content-section">
+
+            <div class="sae-card card">
+                <div class="sae-title">
+                    <span class="sae-badge">SAE 2.1</span>
+                    Construire un réseau informatique pour une petite structure
+                </div>
+                
+                <div class="sae-details">
+                    <h4>📊 Répartition des notes (3 parties) :</h4>
+                    <ul>
+                        <li><strong>Examen NetAcad SRWE</strong> : 33.33% - Switching, Routing, Wireless</li>
+                        <li><strong>Examen Microsoft</strong> : 33% - Active Directory</li>
+                        <li><strong>TP noté</strong> : 33% - Configuration Windows Server</li>
+                    </ul>
+                    <h4>Examen NetAcad</h4>
+                     </ul>l’examen Netacad s’intitule CCNA : Switching, Routing, and Wireless Essentials (SRWE) il porte essentiellement  sur les configuration de switche et de router , le Routage statique IP, le routage inter Vlan </ul>
+                    <h4>TP noté</h4>
+                    </ul>Le  TP noté est sur la configuration d’un Windows sevrer et sa mise en place avec une machine client  L’examen cours Microsoft est porté sur des vidéo de présentation d’Active Directory de micorsofte (il y a plus de 4h de vidéo soporifique) 
+  </ul>
+                    
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">CCNA</span>
+                    <span class="tech-tag">Windows Server</span>
+                    <span class="tech-tag">Active Directory</span>
+                    <span class="tech-tag">Routage VLAN</span>
+                </div>
+
+                <div class="grade average">📊 NetAcad: 83% (14.5/20) | TP: Échec | Microsoft: Difficile</div>
+
+                <div class="reflection-box">
+                    <div class="reflection-title">🤔 Autocritique :</div>
+                    <p>Je ai pas réussie le TP notée alors qu’il était relativement simple javait tout les compétence requise pour réussir mais probablement a cause du stress j’ai pas réussie a performer ,j’ai même oublier de réponde au question écrit, il fallait que je rattrape cet catastrofe sur le QCM cisco Netacad, j’ai apprit les 172 question par coeur ce qui m’as valut la note de 83% ce qui équivaut a environ 14.5/20, et pour l’Examen cours Microsoft, le QCM état infâme probablement le plus dur que l’on as eu de l’année tout les question était en Aglais et portait sur des termes ultra technique que l’on as jamais vu, je pris ma bonne étoile pour une note pas trop catastrophique. 
+.</p>
+                    
+                    <div class="reflection-title">💡 Conclusions :</div>
+                    <p>En conclusion en TP que dois me faire plus confiance et LIRE LE SUJET pour ne pas louper les question, j’aurais pue faire mieux pour  le qcm de cisco Netacad mais j’ai du mal a retenir par cœur donc je m’en suis bien tirer, et l’examen cours Microsoft sans commentaire 
+</p>
+                </div>
+            </div>
+
+            <div class="sae-card card">
+                <div class="sae-title">
+                    <span class="sae-badge">SAE 2.2</span>
+                    Mesurer et caractériser un signal ou un système
+                </div>
+                
+                <div class="sae-details">
+                    <h4>📊 Répartition des notes :</h4>
+                    <ul>
+                        <li><strong>Certificat Matlab</strong> : 10% - Initiation en ligne</li>
+                        <li><strong>TP noté</strong> : 30% - Outils radioélectriques + RDS</li>
+                        <li><strong>Projet groupe</strong> : 20% - Spectre téléphonie mobile</li>
+                        <li><strong>Rapport binôme</strong> : 40% - Cartographie Caen Sud</li>
+                    </ul>
+
+                    <h4>Certificat Matlab</h4>
+                    <p>Le Certificat Matlab est une initiation en ligne, qui une fois complétée vous donnera un certificat, c’est relativement facile a finir il faut juste avoirs des base en programmation de base, et même  l’orque l’on est bloquer on peut regarder la solution </p>
+                    <h4>TP noter</h4>
+                    <p>On a fait 2 TP noter  le premier sur la Prise en main des outils d'exploration et de mesure radioélectrique. Et le deuxième sur l’utilisation de matlab pour l’extraction des données RDS pour la notation le prof passe nous voir l’orque l’on est prêt et nous pose quelque question sur le TP pour voir si on a bien compris </p>
+                    <h4>TP groupe</h4>
+                    <p>Pour le début du projet en travail de groupe de 6 portait sur la  Découverte du spectre de la téléphonie mobile a l’aide d’un scripte matlab 
+</p>
+                    <h4>TP binome</h4>
+                    <p>Et la suite en binome sur la Chasse au spectre de la téléphonie mobile sur le campus 3, cartographie Caen sud,  on a relever les signaux de la bande de fréquence de la téléphonie mobile (2G, 3G, 4G)et comparer  la différence entre lorsque que l’on télécharger un ficher en donné mobile sur son téléphone près de l ‘antenne et quand on le fait pas 
+</p>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">MATLAB</span>
+                    <span class="tech-tag">Spectre RF</span>
+                </div>
+
+                <div class="grade good">📊 TP: 13-15/20 |pas encore de note</div>
+
+                <div class="reflection-box">
+                    <div class="reflection-title">🤔 Autocritique :</div>
+                    <p>Dans la globalité je pense que j’ai bien réussi cet SAE le certificat matlab était relativement facile, aux 2 TP notée j’ai eu environ 13~15/20 au deux TP, pour le travail de groupe j’étais  avec des gens qui travail très bien, et je pense qu’on a fait du bon travail, il y a juste le travail en binôme ou je suis moins confiant car certes on a répondue au attentes du prof mais il m’est déjà arrivé d’avoir une 5/20 a un contre rendu d’un TP avec un  le même profe alors que de mon point de vue ce qu’on as rendue était pas trop mal.J’espère que j’aurais une bonne note car la réussite de mon année peut dépendre de cet note si jamais j’ai en dessous de 9 ça vas être compliqué pour moi 
+.</p>
+                </div>
+            </div>
+
+            <div class="sae-card card">
+                <div class="sae-title">
+                    <span class="sae-badge">SAE 2.3</span>
+                    Amélioration projet météorologique JavaScript
+                </div>
+                
+                <div class="sae-details">
+                    <h4>⚡ Nouvelles fonctionnalités :</h4>
+                    <ul>
+                        <li>Choix du nombre de jours (1 à 7) pour les prévisions</li>
+                        <li>Interface intuitive sans saisie utilisateur</li>
+                        <li>Cases à cocher pour infos supplémentaires :
+                            <ul>
+                                <li>Latitude/Longitude décimales</li>
+                                <li>Cumul de pluie (mm)</li>
+                                <li>Vent moyen (km/h) et direction (°)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">API Météo</span>
+                    <span class="tech-tag">API Découpage</span>
+                    <span class="tech-tag">DOM</span>
+                </div>
+
+                <a href="https://ewen-96.github.io/SAE23/" class="link-button" target="_blank">🌐 Voir le projet</a>
+
+                <div class="reflection-box">
+                    <div class="reflection-title"></div>
+                    <p>Pour parvenir a ce résultat  j’ai dut utiliser un peut d’IA mais il a fallut comme même que je comprenne  le fonctionnement de l’API mété et l’api découpage administrative ,ainsi  que les bases de JavaScript pour réussir.Je n’ai pas rencontrer de grosse difficulté l’or de cet sae car il fallait juste faire une amélioration de ce que l’on avait déjà fait 
+</p>
+                </div>
+            </div>
+
+            <div class="sae-card card">
+                <div class="sae-title">
+                    <span class="sae-badge">SAE 2.4</span>
+                    Projet Intégratif S2 (Réseau + Télécoms + Maths + Anglais)
+                </div>
+                
+                <div class="sae-details">
+                    <h4>🌐 Partie Réseau :</h4>
+                    <ul>
+                        <li>Note groupe (60%) : Maquette réseaux/systèmes</li>
+                        <li>Note individuelle (40%) : QCM + questions ouvertes</li>
+                        <li>Ma partie : VM Debian CLI + GNS3 (réseau WAN)</li>
+                    </ul>
+
+                    <h4>📡 Partie Télécoms :</h4>
+                    <p>QCM sur mesures signaux : Bande ISM, 3G GSM 900, AD</p>
+
+                    <h4>📐 Partie Mathématiques :</h4>
+                    <p>Intervalles, division euclidienne, suites de Sturm, méthodes Newton/dichotomie</p>
+
+                    <h4>🇬🇧 Partie Anglais :</h4>
+                    <p>Vocabulaire technique + rédaction sur la SAE24</p>
+                </div>
+
+               <div class="tech-stack">
+                    <span class="tech-tag">GNS3</span>
+                    <span class="tech-tag">Debian CLI</span>
+                    <span class="tech-tag">IPv6</span>
+                    <span class="tech-tag">MATLAB</span>
+                    <span class="tech-tag">Anglais Technique</span>
+                </div>
+
+
+                <div class="reflection-box">
+                    <div class="reflection-title">Projet Réseau :</div>
+                    <p>Pour le projet en groupe sur  la maquette réseaux/systèmes ce que l’on a dut faire c’est globalement ce que l’on a fait dans la SAE12 mais avec des ajouts et plus d’exigence, je me suis occuper de la partie VM debian CLI avec GNS3 qui simule un réseau WAN qui relie la BOX et le réseau physique, j’ai eu beaucoup de mal a crée la VM et mettre en place gns3server (ce qui permet d’émulée le réseau ) car il y a énormément d’erreur a débugger , et j’ai eu becoup de mal a configuré les routers virtuels dans le réseau virtuel car j’ai voulut faire compliquer en mettant tout en IPV6 alors que je ne savait pas faire j’ai perdu énormément de temps et j’ai pas pue finir a temps. 
+</p>
+                    
+                    <div class="reflection-title"></div>
+                    <p>Pour la Télécoms j’ai juste bien révisé le TP et j’ai réussie avoir 11.5/20 
+Pour les Mathématiques le prof nous a donnée les sujet des deux ans passer que j’ai fait et réussie mais lors de l’examen le sujet était biens plus dur que les ans passer avec beaucoup de    très grande valeur qui mette beaucoup de temps a calculer, donc du me presser pour finir tout les exercices et l’anglais était relativement simple car je me suis bien préparer 
+</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="competences" class="content-section">
+            <div class="semester-title">🎯 Développement des Compétences</div>
+
+            <div class="card">
+                <h2>📊 Bilan par Compétences</h2>
+                
+                <div class="competences-grid">
+                    <div class="competence-card">
+                        <h3>🔐 Compétence 1 : Administrer les réseaux et l'Internet</h3>
+                        <p><strong>Acquis via :</strong> SAE 1.1, 1.2, 2.1, 2.4</p>
+                        <ul>
+                            <li>Sécurisation SSH et authentification par clés</li>
+                            <li>Configuration switches et routeurs Cisco</li>
+                            <li>Mise en place de VLAN et routage inter-VLAN</li>
+                            <li>Administration Windows Server et Active Directory</li>
+                            <li>Émulation réseaux avec GNS3</li>
+                        </ul>
+                        <div class="tech-stack">
+                            <span class="tech-tag">SSH</span>
+                            <span class="tech-tag">CCNA</span>
+                            <span class="tech-tag">Windows Server</span>
+                            <span class="tech-tag">GNS3</span>
+                        </div>
+                    </div>
+
+                    <div class="competence-card">
+                        <h3>📡 Compétence 2 : Connecter les entreprises et les usagers</h3>
+                        <p><strong>Acquis via :</strong> SAE 2.2, 2.4</p>
+                        <ul>
+                            <li>Analyse spectrale des signaux de télécommunications</li>
+                            <li>Mesures radioélectriques sur les réseaux mobiles</li>
+                            <li>Cartographie des signaux 2G/3G/4G</li>
+                            <li>Utilisation d'outils de mesure professionnels</li>
+                            <li>Compréhension des bandes de fréquences</li>
+                        </ul>
+                        <div class="tech-stack">
+                            <span class="tech-tag">MATLAB</span>
+                            <span class="tech-tag">Spectre RF</span>
+                            <span class="tech-tag">2G/3G/4G</span>
+                            <span class="tech-tag">RDS</span>
+                        </div>
+                    </div>
+
+                    <div class="competence-card">
+                        <h3>💻 Compétence 3 : Créer des outils et applications pour les RT</h3>
+                        <p><strong>Acquis via :</strong> SAE 1.4, 1.5, 2.3</p>
+                        <ul>
+                            <li>Développement web responsive (HTML5/CSS3)</li>
+                            <li>Programmation Python avec APIs REST</li>
+                            <li>Applications JavaScript interactives</li>
+                            <li>Traitement et visualisation de données</li>
+                            <li>Intégration d'APIs externes</li>
+                        </ul>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">HTML5/CSS3</span>
+                            <span class="tech-tag">API REST</span>
+                        </div>
+                    </div>
+
+                    <div class="competence-card">
+                        <h3>🛡️ Compétence 4 : Administrer un système d'information sécurisé</h3>
+                        <p><strong>Acquis via :</strong> SAE 1.1, 2.1</p>
+                        <ul>
+                            <li>Sensibilisation à la cybersécurité (MOOC ANSSI)</li>
+                            <li>Mise en place de mesures de sécurité SSH</li>
+                            <li>Configuration sécurisée de services réseau</li>
+                            <li>Gestion des accès et authentification</li>
+                            <li>Hygiène informatique et bonnes pratiques</li>
+                        </ul>
+                        <div class="tech-stack">
+                            <span class="tech-tag">ANSSI</span>
+                            <span class="tech-tag">Cryptographie</span>
+                            <span class="tech-tag">Sécurité</span>
+                            <span class="tech-tag">Active Directory</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+
+    <script>
+        function showSection(sectionId) {
+            // Masquer toutes les sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Désactiver tous les onglets
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Afficher la section sélectionnée
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Activer l'onglet correspondant
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
